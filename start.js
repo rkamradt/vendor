@@ -4,11 +4,10 @@ const
   
   log = require('npmlog'),
   request = require('request'),
-  
   express = require('express'),
   passport = require('passport'),
+  catalog = require('./lib/catalog.js'),
   app = express(),
-  
   GoogleStrategy = require('passport-google').Strategy,
   port = process.env.PORT || 5000;
 
@@ -48,21 +47,27 @@ app.post('/auth/admin', function(req, res){
   // todo authorize admin user
   res.redirect('/adminHome.html');
 });
-app.post('/admin/add', function(req, res){
-  // todo add item
-  res.redirect('/adminItemDesc.html');
+app.post('/admin/item/add', function(req, res){
+  var item = catalog.createItem(req.query.name,req.query.description);
+  catalog.addItem(item); 
+  res.json(200, item);
 });
-app.post('/admin/mod', function(req, res){
-  // todo modify item
-  res.redirect('/adminItemDesc.html');
+app.put('/admin/item/mod', function(req, res){
+  var item = catalog.createItem(req.query.name,req.query.description);
+  catalog.addItem(item); 
+  res.json(200, item);
 });
-app.post('/admin/del', function(req, res){
-  // todo delete item
-  res.redirect('/adminHome.html');
+app.del('/admin/item/:name', function(req, res){
+  catalog.deleteItem(req.params.name);
+  res.json(200, { });
 });
-app.post('/admin/list', function(req, res){
-  // todo list item
-  res.redirect('/adminHome.html');
+app.get('/admin/item/list', function(req, res){
+  var itemArray = catalog.listItems();
+  res.json(200, itemArray);
+});
+app.get('/admin/item/:name', function(req, res){
+  var item = catalog.findItem(req.params.name);
+  res.json(200, item);
 });
 
 const authed = function(req, res, next) {

@@ -4,7 +4,6 @@ var World = function World(callback) {
   this.visit = function(url, callback) {
     this.browser.visit(url, callback);
   };
-
   callback(); // tell Cucumber we're finished and to use 'this' as the world instance
 };
 exports.World = World;
