@@ -44,6 +44,10 @@ app.get('/auth/logout', function(req, res){
   req.logout();
   res.redirect('/');
 });
+app.post('/auth/admin', function(req, res){
+  // todo authorize admin user
+  res.redirect('/adminHome.html');
+});
 
 const authed = function(req, res, next) {
   if (req.isAuthenticated()) {

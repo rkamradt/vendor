@@ -1,13 +1,36 @@
+var assert = require("assert");
+
+
 var myStepDefinitionsWrapper = function () {
   this.World = require("../support/world.js").World; // overwrite default World constructor
 
 
 
     this.Given(/^That I am logged in as an administrator$/, function (callback) {
-      // express the regexp above with the code you wish you had
-      callback.pending();
+      var b = this.browser
+      this.browser.on("error", function(error) {
+          console.log(error);
+          callback();
+      });
+      this.browser.visit("http://localhost:5000/adminLogon.html").then(function() {
+          assert.ok(b.success);
+          assert.equal(b.text("title"), "Admin Logon");
+          // Fill email, password and submit form
+          b.fill("email", "zombie@underworld.dead").
+            fill("password", "eat-the-living").
+            pressButton("Submit", function() {
+        
+              // Form submitted, new page loaded.
+              assert.ok(b.success);
+              assert.equal(b.text("title"), "Admin Page");
+              callback();
+            });
+      }).
+      fail(function(error) {
+          console.log("fail: " + error);
+          callback();
+      });
     });
-    
     this.When(/^I add an item to the catalog$/, function (callback) {
       // express the regexp above with the code you wish you had
       callback.pending();
