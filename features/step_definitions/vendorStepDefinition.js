@@ -9,49 +9,139 @@ var myStepDefinitionsWrapper = function () {
     this.Given(/^That I am logged in as an administrator$/, function (callback) {
       var b = this.browser
       this.browser.on("error", function(error) {
-          console.log(error);
-          callback();
+          assert.fail(error);
       });
       this.browser.visit("http://localhost:5000/adminLogon.html").then(function() {
+        assert.ok(b.success, "Errors reported:", b.errors);
+        assert.equal(b.text("title"), "Admin Logon");
+        // Fill email, password and submit form
+        b.fill("email", "zombie@underworld.dead").
+          fill("password", "eat-the-living").
+          pressButton("Submit", function() {
+    
+          // Form submitted, new page loaded.
           assert.ok(b.success);
-          assert.equal(b.text("title"), "Admin Logon");
-          // Fill email, password and submit form
-          b.fill("email", "zombie@underworld.dead").
-            fill("password", "eat-the-living").
-            pressButton("Submit", function() {
-        
-              // Form submitted, new page loaded.
-              assert.ok(b.success);
-              assert.equal(b.text("title"), "Admin Page");
-              callback();
-            });
-      }).
-      fail(function(error) {
-          console.log("fail: " + error);
+          assert.equal(b.text("title"), "Admin Page");
+          callback();
+        });
+      });
+    });
+    this.Given(/^that I am on the add item action$/, function (callback) {
+      var b = this.browser
+      this.browser.clickLink("Add Item").then(function() {
+          assert.ok(b.success, "Errors reported:" + b.errors);
+          assert.equal(b.text("title"), "Add Item");
           callback();
       });
     });
+    
+    this.Given(/^that I am on the add bulk item action$/, function (callback) {
+      var b = this.browser
+      this.browser.clickLink("Add Bulk Items").then(function() {
+          assert.ok(b.success, "Errors reported:", b.errors);
+          assert.equal(b.text("title"), "Add Bulk Items");
+          callback();
+      });
+    });
+    
+    this.Given(/^that I am on the modify item action$/, function (callback) {
+      var b = this.browser
+      this.browser.clickLink("Modify Item").then(function() {
+          assert.ok(b.success, "Errors reported:", b.errors);
+          assert.equal(b.text("title"), "Modify Item");
+          callback();
+      });
+    });
+    
+    this.Given(/^that I am on the delete item action$/, function (callback) {
+      var b = this.browser
+      this.browser.clickLink("Delete Item").then(function() {
+          assert.ok(b.success, "Errors reported:", b.errors);
+          assert.equal(b.text("title"), "Delete Item");
+          callback();
+      });
+    });
+    
+    this.Given(/^that I am on the list Items action$/, function (callback) {
+      var b = this.browser
+      this.browser.clickLink("List Items").then(function() {
+          assert.ok(b.success, "Errors reported:", b.errors);
+          assert.equal(b.text("title"), "List Items");
+          callback();
+      });
+    });
+
     this.When(/^I add an item to the catalog$/, function (callback) {
+      var b = this.browser
+      this.browser.fill("additem", "zombie blood").
+        fill("adddescription", "blood of the undead").
+        pressButton("Submit", function() {
+    
+          // Form submitted, new page loaded.
+          assert.ok(b.success, "Errors reported:", b.errors);
+          assert.equal(b.text("title"), "Show Item");
+          callback();
+      });
+    });
+    
+    this.When(/^I add a list of items to the catalog$/, function (callback) {
+      var b = this.browser
+      this.browser.fill("bulkadditem", "zombie blood, the blood of the undead").
+        pressButton("Submit", function() {
+    
+          // Form submitted, new page loaded.
+          assert.ok(b.success, "Errors reported:", b.errors);
+          assert.equal(b.text("title"), "Show Item");
+          callback();
+      });
+    });
+        
+    this.When(/^I update an item in the catalog$/, function (callback) {
+      var b = this.browser
+      this.browser.fill("moditem", "zombie blood").
+        fill("moddescription", "zombie blood").
+        pressButton("Submit", function() {
+    
+          // Form submitted, new page loaded.
+          assert.ok(b.success, "Errors reported:", b.errors);
+          assert.equal(b.text("title"), "Show Item");
+          callback();
+      });
+    });
+    
+    this.When(/^I delete an item in the catalog$/, function (callback) {
+      var b = this.browser
+      this.browser.fill("delitem", "zombie blood").
+        pressButton("Submit", function() {
+    
+          // Form submitted, new page loaded.
+          assert.ok(b.success, "Errors reported:", b.errors);
+          assert.equal(b.text("title"), "Admin Page");
+          callback();
+      });
+    });
+    
+    this.Given(/^the item already exists$/, function (callback) {
       // express the regexp above with the code you wish you had
       callback.pending();
     });
-    
+
+    this.Given(/^the item does not exist$/, function (callback) {
+      // express the regexp above with the code you wish you had
+      callback.pending();
+    });
+
     this.Then(/^the item shall be stored in the catalog$/, function (callback) {
       // express the regexp above with the code you wish you had
       callback.pending();
     });
-    
-    this.When(/^I add an item to the catalog that already exists$/, function (callback) {
-      // express the regexp above with the code you wish you had
-      callback.pending();
-    });
-    
+        
     this.Then(/^an error code should be returned$/, function (callback) {
       // express the regexp above with the code you wish you had
       callback.pending();
     });
     
-    this.When(/^I add a list of items to the catalog$/, function (callback) {
+    this.Then(/^the new item shall be saved in the catalog$/, function (callback) {
       // express the regexp above with the code you wish you had
       callback.pending();
     });
@@ -66,42 +156,7 @@ var myStepDefinitionsWrapper = function () {
       callback.pending();
     });
     
-    this.Given(/^that I am logged in as an administrator$/, function (callback) {
-      // express the regexp above with the code you wish you had
-      callback.pending();
-    });
-    
-    this.When(/^I update an item in the catalog$/, function (callback) {
-      // express the regexp above with the code you wish you had
-      callback.pending();
-    });
-    
-    this.Then(/^the new item shall be saved in the catalog$/, function (callback) {
-      // express the regexp above with the code you wish you had
-      callback.pending();
-    });
-    
-    this.When(/^I update an item that is not in the catalog$/, function (callback) {
-      // express the regexp above with the code you wish you had
-      callback.pending();
-    });
-    
-    this.When(/^I delete an item in the catalog$/, function (callback) {
-      // express the regexp above with the code you wish you had
-      callback.pending();
-    });
-    
     this.Then(/^the item shall be marked as deleted$/, function (callback) {
-      // express the regexp above with the code you wish you had
-      callback.pending();
-    });
-    
-    this.When(/^I delete an item that is not in the catalog$/, function (callback) {
-      // express the regexp above with the code you wish you had
-      callback.pending();
-    });
-    
-    this.Given(/^I am logged on as an administrator$/, function (callback) {
       // express the regexp above with the code you wish you had
       callback.pending();
     });

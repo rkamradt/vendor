@@ -48,6 +48,22 @@ app.post('/auth/admin', function(req, res){
   // todo authorize admin user
   res.redirect('/adminHome.html');
 });
+app.post('/admin/add', function(req, res){
+  // todo add item
+  res.redirect('/adminItemDesc.html');
+});
+app.post('/admin/mod', function(req, res){
+  // todo modify item
+  res.redirect('/adminItemDesc.html');
+});
+app.post('/admin/del', function(req, res){
+  // todo delete item
+  res.redirect('/adminHome.html');
+});
+app.post('/admin/list', function(req, res){
+  // todo list item
+  res.redirect('/adminHome.html');
+});
 
 const authed = function(req, res, next) {
   if (req.isAuthenticated()) {

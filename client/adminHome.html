@@ -2,14 +2,14 @@
 <html>
     <head>
         <title>Admin Page</title>
-        <script src ="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <script src="http://code.createjs.com/createjs-2013.12.12.min.js"></script>
     </head>
     <body>
-        <form method="post" action="/adminlogon">
-            <input type="text" name="email"/>
-            <input type="password" name="password"/>
-            <button name="Submit">Submit</button>
-        </form>        
+        <div>
+            <a id="addItem" href="/adminAddItem.html">Add Item</a>
+            <a id="modItem" href="/adminModItem.html">Modify Item</a>
+            <a id="delItem" href="/adminDelItem.html">Delete Item</a>
+            <a id="listItems" href="/adminListItems.html">List Items</a>
+            <a id="addBulkItems" href="/adminAddBulkItems.html">Add Bulk Items</a>
+        </div>        
     </body>
 </html>
