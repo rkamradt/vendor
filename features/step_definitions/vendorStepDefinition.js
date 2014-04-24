@@ -8,9 +8,6 @@ var myStepDefinitionsWrapper = function () {
 
     this.Given(/^That I am logged in as an administrator$/, function (callback) {
       var b = this.browser
-      this.browser.on("error", function(error) {
-          assert.fail(error);
-      });
       this.browser.visit("http://localhost:5000/adminLogon.html").then(function() {
         assert.ok(b.success, "Errors reported:", b.errors);
         assert.equal(b.text("title"), "Admin Logon");
@@ -24,6 +21,8 @@ var myStepDefinitionsWrapper = function () {
           assert.equal(b.text("title"), "Admin Page");
           callback();
         });
+      }).fail(function(error) {
+          assert.fail(error);
       });
     });
     this.Given(/^that I am on the add item action$/, function (callback) {
@@ -79,19 +78,19 @@ var myStepDefinitionsWrapper = function () {
     
           // Form submitted, new page loaded.
           assert.ok(b.success, "Errors reported:", b.errors);
-          assert.equal(b.text("title"), "Show Item");
+          assert.equal(b.text("title"), "Admin Page");
           callback();
       });
     });
     
     this.When(/^I add a list of items to the catalog$/, function (callback) {
       var b = this.browser
-      this.browser.fill("bulkadditem", "zombie blood, the blood of the undead").
+      this.browser.fill("bulkadditem", "zombie gore-the gore of the undead,zombie brains-the missing piece").
         pressButton("Submit", function() {
     
           // Form submitted, new page loaded.
           assert.ok(b.success, "Errors reported:", b.errors);
-          assert.equal(b.text("title"), "Show Item");
+          assert.equal(b.text("title"), "Admin Page");
           callback();
       });
     });
@@ -104,7 +103,7 @@ var myStepDefinitionsWrapper = function () {
     
           // Form submitted, new page loaded.
           assert.ok(b.success, "Errors reported:", b.errors);
-          assert.equal(b.text("title"), "Show Item");
+          assert.equal(b.text("title"), "Admin Page");
           callback();
       });
     });

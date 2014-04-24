@@ -11,6 +11,7 @@
   "devDependencies": {
     "cucumber": "latest",
     "zombie": "latest",
+    "bower": "~1.2.8",
     "gulp": "^3.6.0",
     "gulp-rename": "^1.2.0",
     "tiny-lr": "0.0.5",
@@ -28,10 +29,16 @@
   },
   "dependencies": {
     "express": "~3.3.8",
+    "handlebars-runtime": "~1.0.12",
+    "express3-handlebars": "~0.5.0",
     "request": "~2.27.0",
     "passport": "~0.1.17",
     "passport-google": "~0.3.0",
-    "npmlog": "0.0.4"
+    "npmlog": "0.0.4",
+    "q": "~0.9.7",
+    "redis": "~0.8.4",
+    "mongojs": "0.12.1",
+    "connect-redis": "~1.4.5"
   },
   "homepage": "https://github.com/rkamradt/vendor",
   "license": "Apache-2.0",
