@@ -7,18 +7,12 @@ const
   express = require('express'),
   passport = require('passport'),
   catalog = require('./lib/catalog.js'),
-  redisClient = require('redis').createClient(),
-  RedisStore = require('connect-redis')(express),
   app = express(),
 //  routes = require("./app/routes"),
   exphbs = require("express3-handlebars"),
 //  seeder = require("./app/seeder"),
   GoogleStrategy = require('passport-google').Strategy,
   port = process.env.PORT || 5000;
-
-redisClient
-  .on('ready', function() { log.info('REDIS', 'ready'); })
-  .on('error', function(err) { log.error('REDIS', err.message); });
 
 passport.serializeUser(function(user, done) {
   done(null, user.identifier);
@@ -38,13 +32,12 @@ passport.use(new GoogleStrategy({
 
 app.set('port', port);
 app.use(express.logger('dev'));
-//app.use(express.json());
-//app.use(express.urlencoded());
-//app.use(express.methodOverride())
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(express.methodOverride())
 app.use(express.cookieParser());
 app.use(express.session({
   secret: 'youcanttouchme',
-  store: new RedisStore({client: redisClient})
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -72,11 +65,6 @@ app.get('/auth/logout', function(req, res){
 const authed = function(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
-  } else if (redisClient.ready) {
-    res.json(403, {
-      error: "forbidden",
-      reason: "not_authenticated"
-    });
   } else {
     res.json(503, {
       error: "service_unavailable",
