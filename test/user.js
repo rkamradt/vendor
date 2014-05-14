@@ -1,5 +1,5 @@
 var should = require('should');
-var models = require('../app/models');
+var users = require('../app/models/user');
 var md5 = require('MD5');
 
 
@@ -7,53 +7,121 @@ var md5 = require('MD5');
 describe('User', function(){
     
   var user;
+  var jsonUser;
+  var newJsonUser;
+  var superUser;
   before(function(){
-    user = models.createUser('test@info.com', 'lastname', 'firstname', '123-123-1234', 'userid', 'password');
+    user = users.createUser('test@info.com', 'lastname', 'firstname', '123-123-1234', 'userid', 'password');
+    newJsonUser = users.createUserFromJSON( {
+        email: 'test@info.com',
+        lastname: 'lastname',
+        firstname: 'firstname',
+        phone:'123-123-1234',
+        userid: 'userid',
+        password: 'password',
+        role: 'nobody',
+    }, false);
+    jsonUser = users.createUserFromJSON( {
+        email: 'test@info.com',
+        lastname: 'lastname',
+        firstname: 'firstname',
+        phone:'123-123-1234',
+        userid: 'userid',
+        password: md5('password'),
+        emailverified: true,
+        gravitar: md5('test@info.com'),
+        role: 'somebody'
+    }, true);
+    superUser = users.createSuperUser('me.com');
+
   });
   describe('#createUser', function(){
     it('email should be test@info.com', function(){
-      user._email.should.equal('test@info.com');
+      user.email.should.equal('test@info.com');
     });
     it('lastname should be lastname', function(){
-      user._lastname.should.equal('lastname');
+      user.lastname.should.equal('lastname');
     });
     it('firstname should be firstname', function(){
-      user._firstname.should.equal('firstname');
+      user.firstname.should.equal('firstname');
     });
     it('phone should be 123-123-1234', function(){
-      user._phone.should.equal('123-123-1234');
+      user.phone.should.equal('123-123-1234');
     });
     it('userid should be userid', function(){
-      user._userid.should.equal('userid');
+      user.userid.should.equal('userid');
     });
     it('password should be ' + md5('password'), function(){
-      user._password.should.equal(md5('password'));
+      user.password.should.equal(md5('password'));
     });
     it('role should be nobody', function(){
-      user._role.should.equal('nobody');
+      user.role.should.equal('nobody');
     });
-    it('verified email should be false', function(){
-      user._emailverified.should.be.false;
+  });
+  describe('#createUserFromJSON(create)', function(){
+    it('email should be test@info.com', function(){
+      newJsonUser.email.should.equal('test@info.com');
+    });
+    it('lastname should be lastname', function(){
+      newJsonUser.lastname.should.equal('lastname');
+    });
+    it('firstname should be firstname', function(){
+      newJsonUser.firstname.should.equal('firstname');
+    });
+    it('phone should be 123-123-1234', function(){
+      newJsonUser.phone.should.equal('123-123-1234');
+    });
+    it('userid should be userid', function(){
+      newJsonUser.userid.should.equal('userid');
+    });
+    it('password should be ' + md5('password'), function(){
+      newJsonUser.password.should.equal(md5('password'));
+    });
+    it('role should be nobody', function(){
+      newJsonUser.role.should.equal('nobody');
+    });
+  });
+  describe('#createUserFromJSON(update)', function(){
+    it('email should be test@info.com', function(){
+      jsonUser.email.should.equal('test@info.com');
+    });
+    it('lastname should be lastname', function(){
+      jsonUser.lastname.should.equal('lastname');
+    });
+    it('firstname should be firstname', function(){
+      jsonUser.firstname.should.equal('firstname');
+    });
+    it('phone should be 123-123-1234', function(){
+      jsonUser.phone.should.equal('123-123-1234');
+    });
+    it('userid should be userid', function(){
+      jsonUser.userid.should.equal('userid');
+    });
+    it('password should be ' + md5('password'), function(){
+      jsonUser.password.should.equal(md5('password'));
+    });
+    it('role should be somebody', function(){
+      jsonUser.role.should.equal('somebody');
     });
   });
   describe('#removeRole', function(){
     it('role should be nobody', function() {
       user.addRole('somebody');
       user.removeRole('somebody');
-      user._role.should.equal('nobody');
+      user.role.should.equal('nobody');
     }); 
   });
   describe('#addRole', function(){
     it('role should be somebody', function() {
       user.addRole('somebody');
-      user._role.should.equal('somebody');
+      user.role.should.equal('somebody');
       user.removeRole('somebody');
     }); 
     it('role should be somebody,bigwheel', function() {
       user.addRole('somebody');
-      user._role.should.equal('somebody');
+      user.role.should.equal('somebody');
       user.addRole('bigwheel');
-      user._role.should.equal('somebody,bigwheel');
+      user.role.should.equal('somebody,bigwheel');
       user.removeRole('somebody');
       user.removeRole('bigwheel');
     });
@@ -71,36 +139,19 @@ describe('User', function(){
   });
   describe('#createSuperUser()', function(){
     it('should have an email of super@me.com', function(){
-      user = models.createSuperUser('me.com');
-      user._email.should.equal('super@me.com');
-    });
-    it('lastname should be empty', function(){
-      user = models.createSuperUser('me.com');
-      user._lastname.should.equal('');
-    });
-    it('firstname should be empty', function(){
-      user = models.createSuperUser('me.com');
-      user._firstname.should.equal('');
-    });
-    it('phone should be empty', function(){
-      user = models.createSuperUser('me.com');
-      user._phone.should.equal('');
+      superUser.email.should.equal('super@me.com');
     });
     it('userid should be admin', function(){
-      user = models.createSuperUser('me.com');
-      user._userid.should.equal('admin');
+      superUser.userid.should.equal('admin');
     });
     it('password should be ' + md5('admin123'), function(){
-      user = models.createSuperUser('me.com');
-      user._password.should.equal(md5('admin123'));
+      superUser.password.should.equal(md5('admin123'));
     });
     it('role should be super', function(){
-      user = models.createSuperUser('me.com');
-      user._role.should.equal('super');
+      superUser.role.should.equal('super');
     });
-    it('verified email should be false', function(){
-      user = models.createSuperUser('me.com');
-      user._emailverified.should.be.false;
+    it('verified email should be true', function(){
+      superUser.emailverified.should.be.true;
     });
   });
 });

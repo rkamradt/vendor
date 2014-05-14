@@ -1,25 +1,67 @@
 var should = require('should');
-var models = require('../app/models');
+var items = require('../app/models/item');
 
 
 describe('Item', function(){
     
   var item;
+  var jsonItem;
+  var newJsonItem;
   before(function(){
-    item = models.createItem('test', 'description', 13, 0.10);
+    item = items.createItem('test', 'description', 13, 0.10);
+    newJsonItem = items.createItemFromJSON( {
+        name: 'test',
+        description: 'description',
+        price: 13,
+        qtyDisc: 0.10
+    },false);
+    jsonItem = items.createItemFromJSON( {
+        name: 'test',
+        description: 'description',
+        price: 13,
+        qtyDisc: 0.10
+    },true);
   });
   describe('#createItem()', function(){
     it('should be named test', function(){
-      item._name.should.equal('test');
+      item.name.should.equal('test');
     });
     it('should have a description of descripton', function(){
-      item._description.should.equal('description');
+      item.description.should.equal('description');
     });
     it('should have a price of 13', function(){
-      item._price.should.equal(13);
+      item.price.should.equal(13);
     });
     it('should have a quantity discount of 10%', function(){
-      item._qtyDisc.should.equal(0.10);
+      item.qtyDisc.should.equal(0.10);
+    });
+  });
+  describe('#createItemFromJSON(update)', function(){
+    it('should be named test', function(){
+      jsonItem.name.should.equal('test');
+    });
+    it('should have a description of descripton', function(){
+      jsonItem.description.should.equal('description');
+    });
+    it('should have a price of 13', function(){
+      jsonItem.price.should.equal(13);
+    });
+    it('should have a quantity discount of 10%', function(){
+      jsonItem.qtyDisc.should.equal(0.10);
+    });
+  });
+  describe('#createItemFromJSON(create)', function(){
+    it('should be named test', function(){
+      newJsonItem.name.should.equal('test');
+    });
+    it('should have a description of descripton', function(){
+      newJsonItem.description.should.equal('description');
+    });
+    it('should have a price of 13', function(){
+      newJsonItem.price.should.equal(13);
+    });
+    it('should have a quantity discount of 10%', function(){
+      newJsonItem.qtyDisc.should.equal(0.10);
     });
   });
   describe('#getPrice()', function(){
