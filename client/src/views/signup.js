@@ -12,7 +12,7 @@ module.exports = SignUpView = Marionette.ItemView.extend({
             firstname: this.$el.find('#firstname').val(),
             lastname: this.$el.find('#lastname').val(),
             phone: this.$el.find('#phone').val(),
-            email: this.$el.find('#email').val()
+            email: this.$el.find('#email').val(),
             password: this.$el.find('#password').val()
         };
 

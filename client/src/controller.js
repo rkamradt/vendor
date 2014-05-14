@@ -4,17 +4,18 @@ var Marionette = require('backbone.marionette'),
     AddItemView = require('./views/add_item'),
     UserListView = require('./views/users'),
     UserDetailsView = require('./views/user_details'),
+    LogonView = require('./views/logon'),
     SignUpView = require('./views/signup');
 
 module.exports = Controller = Marionette.Controller.extend({
     initialize: function() {
         App.core.vent.trigger('app:log', 'Controller: Initializing');
-        window.App.views.contactsView = new ContactsView({ collection: window.App.data.contacts });
+        window.App.views.itemListView = new ItemListView({ collection: window.App.data.items });
     },
 
     home: function() {
         App.core.vent.trigger('app:log', 'Controller: "Home" route hit.');
-        var view = window.App.views.contactsView;
+        var view = window.App.views.itemListView;
         this.renderView(view);
         window.App.router.navigate('#');
     },
@@ -28,7 +29,7 @@ module.exports = Controller = Marionette.Controller.extend({
     
     itemDetails: function(id) {
         App.core.vent.trigger('app:log', 'Controller: "Item Details" route hit.');
-        var view = new ItemDetailsView({ model: window.App.data.users.get(id)});
+        var view = new ItemDetailsView({ model: window.App.data.items.get(id)});
         this.renderView(view);
         window.App.router.navigate('itemDetails/' + id);
     },
@@ -42,7 +43,7 @@ module.exports = Controller = Marionette.Controller.extend({
     
     itemList: function() {
         App.core.vent.trigger('app:log', 'Controller: "Item List" route hit.');
-        var view = new ItemListView({ model: window.App.data.users.get()});
+        var view = new ItemListView({ model: window.App.data.items.get()});
         this.renderView(view);
         window.App.router.navigate('itemList');
     },
@@ -54,11 +55,17 @@ module.exports = Controller = Marionette.Controller.extend({
         window.App.router.navigate('addItem');
     },
 
-    signUp: function() {
+    signup: function() {
         App.core.vent.trigger('app:log', 'Controller: "Sign Up" route hit.');
         var view = new SignUpView();
         this.renderView(view);
-        window.App.router.navigate('signUp');
+        window.App.router.navigate('signup');
+    },
+    logon: function() {
+        App.core.vent.trigger('app:log', 'Controller: "Logon Up" route hit.');
+        var view = new LogonView();
+        this.renderView(view);
+        window.App.router.navigate('logon');
     },
 
     renderView: function(view) {

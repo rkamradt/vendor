@@ -1,8 +1,10 @@
 var Marionette = require('backbone.marionette'),
     Controller = require('./controller'),
     Router = require('./router'),
-    CatalogModel = require('./models/catalog'),
-    CatalogCollection = require('./collections/catalog');
+    ItemModel = require('./models/item'),
+    ItemCollection = require('./collections/items'),
+    UserModel = require('./models/user'),
+    UserCollection = require('./collections/users');
 
 module.exports = App = function App() {};
 
@@ -16,11 +18,17 @@ App.prototype.start = function(){
         App.data = {};
 
         // load up some initial data:
-        var catalog = new CatalogCollection();
-        catalog.fetch({
+        var users = new UserCollection();
+        var items = new ItemCollection();
+        users.fetch({
             success: function() {
-                App.data.catalog = catalog;
-                App.core.vent.trigger('app:start');
+                App.data.users = users;
+                items.fetch({
+                    success: function() {
+                        App.data.items = items;
+                        App.core.vent.trigger('app:start');
+                    }
+                });
             }
         });
     });

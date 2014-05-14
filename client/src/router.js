@@ -5,9 +5,10 @@ module.exports = Router = Marionette.AppRouter.extend({
         ''  : 'home',
         'userDetails/:id' : 'userDetails',
         'itemDetails/:id' : 'itemDetails',
-        'itemList' : 'itemList'
-        'userList' : 'userList'
-        'addItem' : 'addItem'
-        'signUp' : 'signUp'
+        'itemList' : 'itemList',
+        'userList' : 'userList',
+        'addItem' : 'addItem',
+        'logon' : 'logon',
+        'signup' : 'signup'
     }
 });

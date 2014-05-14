@@ -5,8 +5,28 @@
     "url": "https://github.com/rkamradt/vendor/issues",
     "email": "info@arkayartists.com"
   },
+  "author": "Randal Kamradt Sr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rkamradt/vendor"
+  },
+  "engines": {
+    "node": "0.10.26"
+  },
+  "engineStrict": true,
   "scripts": {
     "start": "node --harmony ./start.js"
+  },
+  "homepage": "https://github.com/rkamradt/vendor",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "express": "~3.3.8",
+    "MD5": "latest",
+    "handlebars-runtime": "~1.0.12",
+    "express3-handlebars": "~0.5.0",
+    "request": "~2.27.0",
+    "mongojs": "0.12.1",
+    "mongoose": "latest"
   },
   "devDependencies": {
     "cucumber": "latest",
@@ -28,6 +48,7 @@
     "time-grunt": "~0.2.3",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-concurrent": "~0.4.2",
+    "grunt-contrib-less": "~0.8.3",
     "grunt-contrib-handlebars": "~0.6.0",
     "grunt-contrib-cssmin": "~0.7.0",
     "hbsfy": "~1.0.0",
@@ -36,31 +57,6 @@
     "sinon": "~1.8.1",
     "sinon-chai": "~2.5.0",
     "grunt-simple-mocha": "~0.4.0"
-  },
-  "dependencies": {
-    "express": "~3.3.8",
-    "MD5": "latest",
-    "handlebars-runtime": "~1.0.12",
-    "express3-handlebars": "~0.5.0",
-    "request": "~2.27.0",
-    "passport": "~0.1.17",
-    "passport-google": "~0.3.0",
-    "npmlog": "0.0.4",
-    "q": "~0.9.7",
-    "redis": "~0.8.4",
-    "mongojs": "0.12.1",
-    "mongoose": "latest",
-    "connect-redis": "~1.4.5"
-  },
-  "homepage": "https://github.com/rkamradt/vendor",
-  "license": "Apache-2.0",
-  "author": "Randal Kamradt Sr",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/rkamradt/vendor"
-  },
-  "engines": {
-    "node": "0.10.26"
-  },
-  "engineStrict": true
+  }
+
 }

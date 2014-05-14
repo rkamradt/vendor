@@ -8,17 +8,17 @@ var myStepDefinitionsWrapper = function () {
 
     this.Given(/^That I am logged in as an administrator$/, function (callback) {
       var b = this.browser
-      this.browser.visit("http://localhost:5000/adminLogon.html").then(function() {
+      this.browser.visit("http://localhost:5000/#logon").then(function() {
         assert.ok(b.success, "Errors reported:", b.errors);
         assert.equal(b.text("title"), "Admin Logon");
         // Fill email, password and submit form
-        b.fill("email", "zombie@underworld.dead").
-          fill("password", "eat-the-living").
+        b.fill("userid", "admin").
+          fill("password", "admin123").
           pressButton("Submit", function() {
     
           // Form submitted, new page loaded.
           assert.ok(b.success);
-          assert.equal(b.text("title"), "Admin Page");
+          assert.equal(b.text("title"), "Vendor App");
           callback();
         });
       }).fail(function(error) {
