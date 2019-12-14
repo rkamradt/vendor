@@ -24,7 +24,7 @@
     "MD5": "latest",
     "handlebars-runtime": "~1.0.12",
     "express3-handlebars": "~0.5.0",
-    "request": "~2.27.0",
+    "request": "~2.88.0",
     "mongojs": "0.12.1",
     "mongoose": "latest"
   },
